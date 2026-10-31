@@ -1,0 +1,88 @@
+syntax = "proto3";
+
+package spacefractions;
+
+// Internal RPC contract for the Space Fractions services (SF-CONTRACTS).
+// Kept consistent with openapi.yaml and the source service boundaries.
+
+service GameService {
+  rpc Play(PlayRequest) returns (PlayResponse);
+  rpc Pause(PauseRequest) returns (GameStateResponse);
+  rpc Resume(ResumeRequest) returns (GameStateResponse);
+  rpc SubmitAnswer(SubmitAnswerRequest) returns (SubmitAnswerResponse);
+}
+
+service QuestionService {
+  rpc GetQuestions(GetQuestionsRequest) returns (GetQuestionsResponse);
+  rpc AddQuestion(AddQuestionRequest) returns (AddQuestionResponse);
+}
+
+service AdminService {
+  // Admin-only; authorization is enforced server-side (SF-ADMIN, SF-SECURITY).
+  rpc UpdateQuestions(UpdateQuestionsRequest) returns (UpdateQuestionsResponse);
+}
+
+message Question {
+  string id = 1;
+  string prompt = 2;
+  repeated string options = 3;
+  string correct_answer = 4;
+}
+
+message PlayRequest {
+  string game_id = 1;
+}
+
+message PlayResponse {
+  string game_id = 1;
+  string state = 2;
+}
+
+message PauseRequest {
+  string game_id = 1;
+}
+
+message ResumeRequest {
+  string game_id = 1;
+}
+
+message GameStateResponse {
+  string game_id = 1;
+  string state = 2;  // "playing" | "paused" | "game_over"
+}
+
+message SubmitAnswerRequest {
+  string game_id = 1;
+  string question_id = 2;
+  string answer = 3;
+}
+
+message SubmitAnswerResponse {
+  string game_id = 1;
+  bool correct = 2;
+  int32 score = 3;
+  string state = 4;
+}
+
+message GetQuestionsRequest {}
+
+message GetQuestionsResponse {
+  repeated Question questions = 1;
+}
+
+message AddQuestionRequest {
+  Question question = 1;
+}
+
+message AddQuestionResponse {
+  string question_id = 1;
+}
+
+message UpdateQuestionsRequest {
+  string admin_id = 1;
+  repeated Question questions = 2;
+}
+
+message UpdateQuestionsResponse {
+  int32 updated_count = 1;
+}

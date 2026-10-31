@@ -1,0 +1,4 @@
+Original generation: pytest collection failed because HELP_TEXT was missing.
+After documented local repairs: 25 passed in 0.31s (Python 3.12.14, pytest 8.3.5).
+No DeepSeek API requests were made during these checks.
+PostgreSQL integration and full requirement compliance remain unverified.

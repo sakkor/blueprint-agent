@@ -1,0 +1,256 @@
+{
+  "requirements": [
+    {
+      "id": "FR-1",
+      "status": "implemented",
+      "files": [
+        "spacefractions/services.py",
+        "spacefractions/ui.py",
+        "openapi.yaml"
+      ],
+      "tests": [
+        "tests/test_services.py",
+        "tests/test_controller.py"
+      ],
+      "notes": "GameService.new_game + submit_answer flow; desktop play screen drives it. Verification: pytest test_services/test_controller."
+    },
+    {
+      "id": "SF-INTRO",
+      "status": "implemented",
+      "files": [
+        "spacefractions/ui.py"
+      ],
+      "tests": [
+        "tests/test_controller.py"
+      ],
+      "notes": "Intro/menu/end screens implemented as text/animated panels (no movie asset supplied; documented assumption)."
+    },
+    {
+      "id": "SF-PLAY",
+      "status": "implemented",
+      "files": [
+        "spacefractions/services.py",
+        "spacefractions/ui.py"
+      ],
+      "tests": [
+        "tests/test_services.py",
+        "tests/test_controller.py"
+      ],
+      "notes": "Question presentation and answer submission verified via controller test that plays to completion."
+    },
+    {
+      "id": "SF-SCORE",
+      "status": "implemented",
+      "files": [
+        "spacefractions/model.py",
+        "spacefractions/ui.py"
+      ],
+      "tests": [
+        "tests/test_model.py"
+      ],
+      "notes": "Game.view_score + end screen final score; fraction normalization ensures equivalent answers count."
+    },
+    {
+      "id": "SF-HELP",
+      "status": "implemented",
+      "files": [
+        "spacefractions/ui.py"
+      ],
+      "tests": [
+        "tests/test_help.py"
+      ],
+      "notes": "Help screen exposed from menu; manual UI verification (no automated GUI test)."
+    },
+    {
+      "id": "SF-ADMIN",
+      "status": "implemented",
+      "files": [
+        "spacefractions/services.py",
+        "spacefractions/ui.py"
+      ],
+      "tests": [
+        "tests/test_services.py",
+        "tests/test_controller.py"
+      ],
+      "notes": "AdminService.login + add_question gated by role; negative authorization tests included."
+    },
+    {
+      "id": "SF-STATE",
+      "status": "implemented",
+      "files": [
+        "spacefractions/model.py",
+        "spacefractions/services.py",
+        "spacefractions/ui.py"
+      ],
+      "tests": [
+        "tests/test_model.py",
+        "tests/test_controller.py"
+      ],
+      "notes": "Playing/Paused/GameOver transitions including pause/resume covered by tests."
+    },
+    {
+      "id": "ASR-1",
+      "status": "partial",
+      "files": [
+        "spacefractions/storage.py",
+        "sql/game_ddl.sql",
+        "sql/question_ddl.sql",
+        "docs/runbook.md"
+      ],
+      "tests": [
+        "tests/test_storage.py"
+      ],
+      "notes": "PostgreSQL schema + adapter delivered; durability/recovery is a design + verification plan, not certified (no live DB)."
+    },
+    {
+      "id": "ASR-2",
+      "status": "partial",
+      "files": [
+        "spacefractions/services.py",
+        "spacefractions/errors.py",
+        "architecture.md"
+      ],
+      "tests": [
+        "tests/test_services.py",
+        "tests/test_controller.py"
+      ],
+      "notes": "Authn/authz enforced with negative tests; TLS/Vault/service-mesh documented but deferred. Not security-certified."
+    },
+    {
+      "id": "NFR-1",
+      "status": "partial",
+      "files": [
+        "architecture.md",
+        "k8s/spacefractions-deployment.yaml"
+      ],
+      "tests": [],
+      "notes": "Performance is a design (probes/autoscaling) with a load-test verification plan; no runtime evidence."
+    },
+    {
+      "id": "SF-MODEL",
+      "status": "implemented",
+      "files": [
+        "spacefractions/model.py"
+      ],
+      "tests": [
+        "tests/test_model.py"
+      ],
+      "notes": "Game/Question/User/Admin entities with associations implemented and tested."
+    },
+    {
+      "id": "SF-SERVICES",
+      "status": "implemented",
+      "files": [
+        "spacefractions/services.py",
+        "internal.proto",
+        "openapi.yaml"
+      ],
+      "tests": [
+        "tests/test_services.py"
+      ],
+      "notes": "Four service classes map to component boundaries; contracts consistent with source."
+    },
+    {
+      "id": "SF-PERSIST",
+      "status": "implemented",
+      "files": [
+        "spacefractions/storage.py",
+        "sql/game_ddl.sql",
+        "sql/question_ddl.sql"
+      ],
+      "tests": [
+        "tests/test_storage.py"
+      ],
+      "notes": "PostgreSQL adapter + schema delivered; SQLite offline adapter documented for demo only."
+    },
+    {
+      "id": "SF-SECURITY",
+      "status": "implemented",
+      "files": [
+        "spacefractions/services.py",
+        "spacefractions/errors.py"
+      ],
+      "tests": [
+        "tests/test_services.py",
+        "tests/test_controller.py"
+      ],
+      "notes": "Authorization gate + authentication with negative tests; secrets/TLS documented (deferred infra)."
+    },
+    {
+      "id": "SF-CONTRACTS",
+      "status": "implemented",
+      "files": [
+        "openapi.yaml",
+        "internal.proto"
+      ],
+      "tests": [],
+      "notes": "OpenAPI and proto consistent with service methods and schemas; validated syntactically, not via generated stubs."
+    },
+    {
+      "id": "SF-DEPLOY",
+      "status": "implemented",
+      "files": [
+        "k8s/spacefractions-deployment.yaml",
+        "Dockerfile",
+        "docker-compose.yml"
+      ],
+      "tests": [],
+      "notes": "3-replica deployment with probes and health endpoint; not deployed live."
+    },
+    {
+      "id": "SF-OPS",
+      "status": "partial",
+      "files": [
+        "docs/runbook.md",
+        "spacefractions/health.py"
+      ],
+      "tests": [],
+      "notes": "Health checks + observability/backup/recovery verification plan documented; metrics pipeline deferred; availability not certified."
+    },
+    {
+      "id": "SF-TRACE",
+      "status": "implemented",
+      "files": [
+        "traceability_matrix.csv",
+        "implementation-map.json",
+        "ASSUMPTIONS.md"
+      ],
+      "tests": [],
+      "notes": "Every catalog ID mapped exactly once with files/tests/rationale."
+    },
+    {
+      "id": "SF-STACK",
+      "status": "implemented",
+      "files": [
+        "architecture.md",
+        "ASSUMPTIONS.md"
+      ],
+      "tests": [],
+      "notes": "3+ alternatives per component with chosen-stack rationale."
+    },
+    {
+      "id": "SF-ROLLOUT",
+      "status": "implemented",
+      "files": [
+        "architecture.md",
+        "ASSUMPTIONS.md"
+      ],
+      "tests": [],
+      "notes": "Migration, compatibility and rollout steps documented."
+    },
+    {
+      "id": "EMAIL-DESKTOP",
+      "status": "implemented",
+      "files": [
+        "desktop.py",
+        "desktop-manifest.json",
+        "build_game.ps1",
+        "spacefractions/ui.py"
+      ],
+      "tests": [
+        "tests/test_controller.py"
+      ],
+      "notes": "Native tkinter window + mainloop; manifest matches required schema; build_game.ps1 runs pytest then PyInstaller --onefile --windowed -> Space-Fractions.exe."
+    }
+  ]
+}

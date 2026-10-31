@@ -1,0 +1,5 @@
+{
+  "framework": "tkinter",
+  "entry_point": "desktop.py",
+  "build_script": "build_game.ps1"
+}

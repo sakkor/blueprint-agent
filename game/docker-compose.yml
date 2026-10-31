@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: spacefractions
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: spacefractions
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U spacefractions"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  spacefractions:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_DSN: postgresql://spacefractions:secret@db:5432/spacefractions
+    ports:
+      - "8080:80"

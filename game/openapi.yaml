@@ -1,0 +1,93 @@
+openapi: 3.0.0
+info:
+  title: Space Fractions API
+  description: External API for the Space Fractions game (SF-CONTRACTS). Consistent with internal.proto and service boundaries.
+  version: 1.0.0
+paths:
+  /play:
+    get:
+      summary: Start or resume a game
+      parameters:
+        - name: gameId
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Game started
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  gameId:
+                    type: string
+                  state:
+                    type: string
+                    enum: [playing, paused, game_over]
+  /questions:
+    get:
+      summary: List all fraction questions
+      responses:
+        "200":
+          description: Question list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  questions:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Question"
+    post:
+      summary: Add a question (admin authorized)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Question"
+      responses:
+        "201":
+          description: Question created
+        "403":
+          description: Not authorized
+  /score:
+    get:
+      summary: Get current game score
+      parameters:
+        - name: gameId
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Score
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  gameId:
+                    type: string
+                  score:
+                    type: integer
+components:
+  schemas:
+    Question:
+      type: object
+      required: [id, prompt, options, correct_answer]
+      properties:
+        id:
+          type: string
+        prompt:
+          type: string
+        options:
+          type: array
+          items:
+            type: string
+        correct_answer:
+          type: string

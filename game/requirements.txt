@@ -1,0 +1,3 @@
+# Space Fractions dependencies
+psycopg2-binary>=2.9,<3
+pyinstaller>=6.0,<7
